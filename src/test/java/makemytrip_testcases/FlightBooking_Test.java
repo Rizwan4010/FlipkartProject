@@ -3,7 +3,6 @@ package makemytrip_testcases;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import base.BaseLibrary;
 import pages.FlightBooking_Page;
 
@@ -25,5 +24,4 @@ public class FlightBooking_Test extends BaseLibrary {
 	public void quit() {
 		tearDown();
 	}
-
 }

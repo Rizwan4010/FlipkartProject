@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
@@ -57,15 +58,15 @@ public class ExtentListeners implements ITestListener {
 		testReport.get().fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured:Click to see"
 				+ "</font>" + "</b >" + "</summary>" +excepionMessage.replaceAll(",", "<br>")+"</details>"+" \n");
 		
-//		try {
-//
-//			ExtentManager.captureScreenshot();
-//			testReport.get().fail("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>",
-//					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotName)
-//							.build());
-//		} catch (Exception e) {
-//
-//		}
+		try {
+
+			ExtentManager.captureScreenshot();
+			testReport.get().fail("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>",
+					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotName)
+							.build());
+		} catch (Exception e) {
+
+		}
 		
 		String failureLogg="TEST CASE FAILED";
 		Markup m = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);

@@ -1,11 +1,7 @@
 package base;
 
 import java.io.FileInputStream;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +21,7 @@ import org.openqa.selenium.NoSuchWindowException;
 
 public class BaseLibrary {
 
-	String file = "C:\\Users\\HP\\eclipse-workspace\\FlipkartAutomation\\TestData\\config.properties";
+	String file = "C:\\Users\\HP\\eclipse-workspace\\MakeMyTripAutomation\\TestData\\config.properties";
 
 	public static WebDriver driver;
 	public static FileInputStream fis;
@@ -35,17 +31,12 @@ public class BaseLibrary {
 	// ---------------------BROWSER LAUNCH--------------------------------------
 
 	public void launchURL(String url) {
-//		System.setProperty("webdriver.chrome.driver",
-//				"C:\\Users\\HP\\eclipse-workspace\\FlipkartAutomation\\Drivers\\chromedriver.exe");
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.get(url);
 		implicitWait(10);
 		driver.manage().window().maximize();
-//		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='webklipper-publisher-widget-container-notification-frame']")));
-		driver.findElement(By.xpath("//li[@class='makeFlex hrtlCenter font10 makeRelative lhUser userLoggedOut']"))
-				.click();
-
+		driver.findElement(By.xpath("//li[@class='makeFlex hrtlCenter font10 makeRelative lhUser userLoggedOut']")).click();
 	}
 
 	// -------------------------FILE CONFIGURATION------------------------------
@@ -184,53 +175,13 @@ public class BaseLibrary {
 
 	// ==================Calendar-Date-Picker==========================
 
-	public static void selectDate(WebDriver driver, String targetDate, String dateFormat) {
-		Date formattedTargetDate;
-		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat targetDateFormat = new SimpleDateFormat(dateFormat);
-		
-
-		try {
-
-			targetDateFormat.setLenient(false);
-			formattedTargetDate = targetDateFormat.parse(targetDate);
-			calendar.setTime(formattedTargetDate);
-
-			int targetDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int targetMonth = calendar.get(Calendar.MONTH);
-			int targetYear = calendar.get(Calendar.YEAR);
-
-			String actualDate = driver.findElement(By.className("//div[@class='DayPicker-Caption']")).getText();
-			calendar.setTime(new SimpleDateFormat("MMM yyyy").parse(actualDate));
-
-			int actualMonth = calendar.get(Calendar.MONTH);
-			int actualYear = calendar.get(Calendar.YEAR);
-
-			while (targetMonth < actualMonth || targetYear < actualYear) {
-				driver.findElement(By.className("//span[@class='DayPicker-NavButton DayPicker-NavButton--prev']"))
-						.click();
-				actualDate = driver.findElement(By.className("")).getText();
-				calendar.setTime(new SimpleDateFormat("MM yyyy").parse(actualDate));
-
-				actualMonth = calendar.get(Calendar.MONTH);
-				actualYear = calendar.get(Calendar.YEAR);
-			}
-
-			while (targetMonth > actualMonth || targetYear > actualYear) {
-				driver.findElement(By.className("//span[@class='DayPicker-NavButton DayPicker-NavButton--next']"))
-						.click();
-				actualDate = driver.findElement(By.className("")).getText();
-				calendar.setTime(new SimpleDateFormat("MM yyyy").parse(actualDate));
-
-				actualMonth = calendar.get(Calendar.MONTH);
-				actualYear = calendar.get(Calendar.YEAR);
-			}
-
-			driver.findElement(By.xpath(
-					"//table[@class='ui-datepicker-calendar']//td[not(contains(@class,'ui-datepicker-other-month'))]/a[text()="
-							+ targetDay + "]"));
-		} catch (Exception e) {
-			System.out.println("Getting error in select calendar " + e);
+	public static void selectDate(String Departuredate, String Departuremonth, String Departureyear) {
+		String first_month_year = driver.findElement(By.xpath("(//div[@class='DayPicker-Caption']//div)[1]")).getText();
+		String first_month = first_month_year.split("")[0].trim();
+		String first_year = first_month_year.split("")[1].trim();
+		while (first_month.equalsIgnoreCase(Departuremonth) && first_year.equalsIgnoreCase(Departureyear)) {
+			driver.findElement(By.xpath("//span[@class='DayPicker-NavButton DayPicker-NavButton--next']")).click();
 		}
+		driver.findElement(By.xpath("//div[@aria-label='" + Departuredate + "']")).click();
 	}
 }

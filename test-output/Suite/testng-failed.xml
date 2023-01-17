@@ -4,22 +4,17 @@
   <listeners>
     <listener class-name="extent_report.ExtentListeners"/>
   </listeners>
-  <test thread-count="5" name="Test(failed)">
+  <test thread-count="5" name="HomePage_Test(failed)">
     <classes>
-      <class name="makemytrip_testcases.Search_Item_Test">
-        <methods>
-          <include name="searchTest"/>
-          <include name="quit"/>
-          <include name="getURL"/>
-        </methods>
-      </class> <!-- makemytrip_testcases.Search_Item_Test -->
-      <class name="makemytrip_testcases.Login_Test">
+      <class name="makemytrip_testcases.Home_Test">
         <methods>
           <include name="glaunchURL"/>
-          <include name="homePageLogin"/>
+          <include name="verifyIntroBiz"/>
+          <include name="verifySpecialOffer"/>
+          <include name="islogovisible"/>
           <include name="quit"/>
         </methods>
-      </class> <!-- makemytrip_testcases.Login_Test -->
+      </class> <!-- makemytrip_testcases.Home_Test -->
     </classes>
-  </test> <!-- Test(failed) -->
+  </test> <!-- HomePage_Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->
